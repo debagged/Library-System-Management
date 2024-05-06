@@ -58,9 +58,9 @@ int main()
         printf("\e[1;1H\e[2J"); // clear screen
     
         printf("\n\n");
-        printf(BOLD "\t   ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n" RESET);
-        printf(BOLD "\t   ┃              "GREEN"WELCOME TO BOOKLY RECORDS"FORMAT"                 ┃\n" RESET);
-        printf(BOLD "\t   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n" RESET);
+        printf(BOLD "\t   |[=======================================================]|\n" RESET);
+        printf(BOLD "\t   ||              "GREEN"WELCOME TO BOOKLY RECORDS"FORMAT"                 ||\n" RESET);
+        printf(BOLD "\t   |[=======================================================]|\n\n" RESET);
 
 
         printf(BOLD"\t      MAIN MENU \n" RESET);
