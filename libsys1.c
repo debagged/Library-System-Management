@@ -23,6 +23,7 @@ void addBooks();
 void viewBooks();
 void borrowBooks();
 void borrowedList();
+void edit();
 void editFile(const char *filename);
 void editBooks(const char *filename);
 void editBorrowed(const char *filename);
@@ -45,10 +46,13 @@ struct Students{
     char status[10];
 } S;
 
+int choice;
+int editNum;
 
 
 FILE *fp, *file; //Allowing for file creation 
-int choice;
+
+
 
 int main() 
 {
@@ -59,7 +63,7 @@ int main()
     
         printf("\n\n");
         printf(BOLD "\t   |[=======================================================]|\n" RESET);
-        printf(BOLD "\t   ||              "GREEN"WELCOME TO BOOKLY RECORDS"FORMAT"                 ||\n" RESET);
+        printf(BOLD "\t   ||              "GREEN"WELCOME TO BOOKLY RECORDS"FORMAT"                ||\n" RESET);
         printf(BOLD "\t   |[=======================================================]|\n\n" RESET);
 
 
@@ -115,20 +119,7 @@ int main()
                 break;
 
             case 5: 
-                 //printf("Enter the File Name to Edit:");
-                int editNum;
-                    printf("Select a File to Edit \n [1. books.txt] \n [2.borrow.txt]\n");
-                    scanf("%d", &editNum);
-                
-                    getchar();
-
-                if (editNum == 1) {
-                    editFile("books.txt");
-                }
-                else{
-                    editFile("borrow.txt");
-                }
-
+                edit();
                 break;
 
             default:
@@ -140,12 +131,11 @@ int main()
             getchar(); // Wait for the user to press Enter
         }
         
-    } while(choices != 0);
+    }
+    while(choices != 0);
     
     return 0;
 }
-
-
 
 
 // VOID FUNCTIONS {
@@ -172,11 +162,7 @@ void loadingAnimation() {
             usleep(100000);
         }
     printf(BOLD "\n\t  =====================================\n" RESET);
-
-
-
 }
-
 
 void addBooks() {
     fp = fopen("books.txt", "a"); // "a" for appending to a file named books
@@ -285,7 +271,7 @@ void borrowBooks() {
     fseek(fp, 0, SEEK_END); // Move to the end of the file
     if (ftell(fp) == 0) {
         // Check the position, if it's 0, the file is empty
-        fprintf(fp, "\t %-20s%-35s%-35s%-10s%-35s%-13s%-15s%-10s\n", "Student ID[06-]", "Student Name", "Program", "Book ID", "Book Name", "Date Lent","Return Date", "Status");
+        fprintf(fp, " %-20s%-35s%-35s%-10s%-35s%-13s%-15s%-10s\n", "Student ID[06-]", "Student Name", "Program", "Book ID", "Book Name", "Date Lent","Return Date", "Status");
     }
     fseek(fp, 0, SEEK_SET); // Move back to the beginning of the file
 
@@ -385,12 +371,24 @@ void borrowedList(){
     fclose(fp); // Close the file
 }
 
-void editFile(const char *filename)
+void edit(){
+    printf("Select a File to Edit \n [1. books.txt] \n [2.borrow.txt]\n");
+    scanf("%d", &editNum);
+    getchar();
+
+    if (editNum == 1) {
+        editFile("books.txt");
+    } 
+    else{
+        editFile("borrow.txt");
+    }
+}
+
+/**/void editFile(const char *filename)
 {
     char lines[MAX_LINES][MAX_LENGTH];
     int lineCount = 0;
 
-    FILE *file;
     // Open file for reading
     file = fopen(filename, "r");
 
@@ -434,7 +432,7 @@ void editFile(const char *filename)
     printf("File %s updated successfully.\n", filename);
 }
 
-void editBooks(const char *filename)
+/**//**/void editBooks(const char *filename)
 {
     char line[MAX_LINES];
     char lineNumber = 0;
@@ -479,13 +477,12 @@ void editBooks(const char *filename)
 
 }
 
-void editBorrowed(const char *filename){
+/**//**/void editBorrowed(const char *filename){
 
     char line[MAX_LINES];
     char lineNumber = 0;
     long position;
     
-    FILE *file;
     file = fopen(filename, "rw+");
 
     // Generate current date and time
