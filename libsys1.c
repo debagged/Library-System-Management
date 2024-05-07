@@ -19,6 +19,7 @@
 
 //Void Funtion Declarations {
 void loadingAnimation();
+void bookID();
 void addBooks();
 void viewBooks();
 void borrowBooks();
@@ -163,7 +164,28 @@ void loadingAnimation() {
         }
 }
 
+void bookID(){
+// Read the last used Book ID from a file
+    FILE *idFile = fopen("book_id.txt", "r");
+    int lastBookID = 0;
+    if (idFile != NULL) // condition where it checks if the file is successfully opened.
+    {
+        fscanf(idFile, "%d", &lastBookID);
+        fclose(idFile);
+    }
+    B.ID = lastBookID + 1;
+
+    // Update the stored Book ID
+    idFile = fopen("book_id.txt", "w");
+    if (idFile != NULL) {
+        fprintf(idFile, "%d", B.ID);
+        fclose(idFile);
+    }
+}
+
 void addBooks() {
+    bookID();
+
     fp = fopen("books.txt", "a"); // "a" for appending to a file named books
 
     if (fp == NULL) {
@@ -183,7 +205,6 @@ void addBooks() {
 
     printf(GREEN "\n\n\t\t===================[ ADD BOOKS ]===================\n" FORMAT);
 
-    B.ID++;         
 
     printf(BOLD "\n\t\t  Enter Book Name: " RESET);
     fgets(B.bookName, 50, stdin);
