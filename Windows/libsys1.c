@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <unistd.h> // used for usleep function
+#include <Windows.h> // used for usleep function
 #include <time.h>
 
-//BOLD WHITE {
+//BOLD WHITE 
 #define BOLD "\033[1m" 
 #define RESET "\033[0m"
 
-//BOLD GREEN {
+//BOLD GREEN 
 #define GREEN "\x1b[1;32m"
 #define FORMAT "\x1b[0m"
-// }
+
 
 #define MAX_LINES 1500
 #define MAX_LENGTH 400
@@ -23,6 +23,7 @@ void addBooks();
 void viewBooks();
 void borrowBooks();
 void borrowedList();
+void edit();
 void editFile(const char *filename);
 void editBooks(const char *filename);
 void editBorrowed(const char *filename);
@@ -45,10 +46,16 @@ struct Students{
     char status[10];
 } S;
 
+int choice;
+int editNum;
 
 
 FILE *fp, *file; //Allowing for file creation 
-int choice;
+
+
+int readBookID() {
+    
+}
 
 int main() 
 {
@@ -56,10 +63,12 @@ int main()
 
     do {
         printf("\e[1;1H\e[2J"); // clear screen
-    
+
+        
+
         printf("\n\n");
         printf(BOLD "\t   |[=======================================================]|\n" RESET);
-        printf(BOLD "\t   ||              "GREEN"WELCOME TO BOOKLY RECORDS"FORMAT"                 ||\n" RESET);
+        printf(BOLD "\t   ||              "GREEN"WELCOME TO BOOKLY RECORDS"FORMAT"                ||\n" RESET);
         printf(BOLD "\t   |[=======================================================]|\n\n" RESET);
 
 
@@ -83,9 +92,9 @@ int main()
 
         printf("\n\n\n\t\tEnter your choice here >> ");
         scanf(" %d", &choices);
-    
+
         getchar();// Consume the newline character in the buffer
-    
+
         switch (choices) {
             case 0:
                 printf("\e[1;1H\e[2J"); // clear screen
@@ -115,20 +124,7 @@ int main()
                 break;
 
             case 5: 
-                 //printf("Enter the File Name to Edit:");
-                int editNum;
-                    printf("Select a File to Edit \n [1. books.txt] \n [2.borrow.txt]\n");
-                    scanf("%d", &editNum);
-                
-                    getchar();
-
-                if (editNum == 1) {
-                    editFile("books.txt");
-                }
-                else{
-                    editFile("borrow.txt");
-                }
-
+                edit();
                 break;
 
             default:
@@ -140,12 +136,11 @@ int main()
             getchar(); // Wait for the user to press Enter
         }
         
-    } while(choices != 0);
+    }
+    while(choices != 0);
     
     return 0;
 }
-
-
 
 
 // VOID FUNCTIONS {
@@ -171,12 +166,7 @@ void loadingAnimation() {
             fflush(stdout);
             usleep(100000);
         }
-    printf(BOLD "\n\t  =====================================\n" RESET);
-
-
-
 }
-
 
 void addBooks() {
     fp = fopen("books.txt", "a"); // "a" for appending to a file named books
@@ -234,9 +224,9 @@ void viewBooks() {
     if (fp == NULL) 
     {
         printf("\e[1;1H\e[2J"); // clear screen
-        printf("\n   ----------------------------------------------------------------------------------------------------------------------------------------------\n\n");    
+        printf("\n   |[===========================================================================================================================================]|n\n");    
         printf(BOLD "\tERROR OPENING THE FILE!\n" RESET);
-        printf("\n   ----------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("\n   |[===========================================================================================================================================]|n");
         return;
     }
 
@@ -246,9 +236,9 @@ void viewBooks() {
     fseek(fp, 0, SEEK_END);
     if (ftell(fp) == 0)
     {               
-        printf("   ----------------------------------------------------------------------------------------------------------------------------------------------\n\n");
+        printf("   |[===========================================================================================================================================]|n\n");
         printf(BOLD "\n\t\t No books available.\n" RESET);
-        printf("\n   ----------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("\n   |[===========================================================================================================================================]|n");
     } 
     else 
     {
@@ -258,14 +248,14 @@ void viewBooks() {
         printf(GREEN "\n[VIEW BOOKS LIST]\n" FORMAT);
         // Print a separator line
                  
-        printf(" ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n\n");
+        printf(" |[===========================================================================================================================================]|\n\n");
 
         // Read and print each line until the end of the file
         while (fgets(line, sizeof(line), fp) != NULL) {
             printf(BOLD "%s" RESET, line);
         }
 
-        printf("\n ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n");
+      printf("\n |[===========================================================================================================================================]|\n");
     }
     fclose(fp); // Close the file
 }
@@ -285,7 +275,7 @@ void borrowBooks() {
     fseek(fp, 0, SEEK_END); // Move to the end of the file
     if (ftell(fp) == 0) {
         // Check the position, if it's 0, the file is empty
-        fprintf(fp, "\t %-20s%-35s%-35s%-10s%-35s%-13s%-15s%-10s\n", "Student ID[06-]", "Student Name", "Program", "Book ID", "Book Name", "Date Lent","Return Date", "Status");
+        fprintf(fp, " %-20s%-35s%-35s%-10s%-35s%-13s%-15s%-10s\n", "Student ID[06-]", "Student Name", "Program", "Book ID", "Book Name", "Date Lent","Return Date", "Status");
     }
     fseek(fp, 0, SEEK_SET); // Move back to the beginning of the file
 
@@ -385,12 +375,24 @@ void borrowedList(){
     fclose(fp); // Close the file
 }
 
-void editFile(const char *filename)
+void edit(){
+    printf("Select a File to Edit \n [1. books.txt] \n [2.borrow.txt]\n");
+    scanf("%d", &editNum);
+    getchar();
+
+    if (editNum == 1) {
+        editFile("books.txt");
+    } 
+    else{
+        editFile("borrow.txt");
+    }
+}
+
+/**/void editFile(const char *filename)
 {
     char lines[MAX_LINES][MAX_LENGTH];
     int lineCount = 0;
 
-    FILE *file;
     // Open file for reading
     file = fopen(filename, "r");
 
@@ -434,7 +436,7 @@ void editFile(const char *filename)
     printf("File %s updated successfully.\n", filename);
 }
 
-void editBooks(const char *filename)
+/**//**/void editBooks(const char *filename)
 {
     char line[MAX_LINES];
     char lineNumber = 0;
@@ -479,12 +481,11 @@ void editBooks(const char *filename)
 
 }
 
-void editBorrowed(const char *filename){
+/**//**/void editBorrowed(const char *filename){
 
     char line[MAX_LINES];
     char lineNumber = 0;
     long position;
-    
     FILE *file;
     file = fopen(filename, "rw+");
 
@@ -515,7 +516,7 @@ void editBorrowed(const char *filename){
     fgets(S.bookName, 50, stdin);
     S.bookName[strcspn(S.bookName, "\n")] = '\0';
 
-    printf("\n\n\nStatus: ");
+    printf("\n\n\n Status: ");
     scanf("%s", S.status);
 
     // Assuming the return date is one week from the borrow date
