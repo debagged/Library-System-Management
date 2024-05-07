@@ -4,14 +4,14 @@
 #include <unistd.h> // used for usleep function
 #include <time.h>
 
-//BOLD WHITE {
+//BOLD WHITE 
 #define BOLD "\033[1m" 
 #define RESET "\033[0m"
 
-//BOLD GREEN {
+//BOLD GREEN 
 #define GREEN "\x1b[1;32m"
 #define FORMAT "\x1b[0m"
-// }
+
 
 #define MAX_LINES 1500
 #define MAX_LENGTH 400
