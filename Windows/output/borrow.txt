@@ -1,2 +1,0 @@
- Student ID[06-]     Student Name                       Program                            Book ID   Book Name                          Date Lent    Return Date    Status    
-	 12345               Rein                               BSCS                               1         Hello World                        05-07-2024   05-14-2024     Borrowed  
