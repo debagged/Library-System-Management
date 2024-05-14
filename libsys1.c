@@ -253,7 +253,7 @@ void viewBooks() {
     if (ftell(fp) == 0)
     {               
         printf("   |[===========================================================================================================================================]|n\n");
-        printf(BOLD "\n\t\t No books available.\n" RESET);
+        printf(BOLD "\n\t\t\t\t No books available.\n" RESET);
         printf("\n   |[===========================================================================================================================================]|n");
     } 
     else 
@@ -284,7 +284,9 @@ void borrowBooks() {
     fp = fopen("borrow.txt", "a");
 
     if (fp == NULL) {
-        printf("Error opening file!\n");
+        printf("   |[===========================================================================================================================================]|n\n");
+        printf(BOLD "\n\t\t\t\t Error opening the file .\n" RESET);
+        printf("\n   |[===========================================================================================================================================]|n");
         return;
     }
 
@@ -358,7 +360,9 @@ void borrowedList(){
     if (fp == NULL) 
     {
         printf("\e[1;1H\e[2J"); // clear screen
-        printf("\n\t\tERROR OPENING THE FILE!\n");
+        printf("   |[===========================================================================================================================================]|n\n");
+        printf(BOLD "\n\t\t\t\t Error opening the file .\n" RESET);
+        printf("\n   |[===========================================================================================================================================]|n");
         return;
     }
 
@@ -368,7 +372,9 @@ void borrowedList(){
     fseek(fp, 0, SEEK_END);
     if (ftell(fp) == 0)
     {
-        printf("\n\t\t No data available.\n");
+         printf("   |[===========================================================================================================================================]|n\n");
+        printf(BOLD "\n\t\t\t\t No data available.\n" RESET);
+        printf("\n   |[===========================================================================================================================================]|n");
     } 
     else 
     {
@@ -393,8 +399,7 @@ void borrowedList(){
 
 void edit(){
     printf("\e[1;1H\e[2J"); // clear screen
-    printf("\n\t\t Select a File to Edit \n\t\t   [1. books.txt]\n\t\t   [2.borrow.txt]\n");
-
+    printf("\n\t\t Select a File to Edit \n\t\t   [1. books.txt]\n\t\t   [2.borrow.txt]\n"); //prompts to user to select a file to edit 
     scanf("%d", &editNum);
     getchar();
 
@@ -406,7 +411,7 @@ void edit(){
     }
 }
 
-/**/void editFile(const char *filename)
+/**/void editFile(const char *filename) // editFile works through passing by ptr
 {
     char lines[MAX_LINES][MAX_LENGTH];
     int lineCount = 0;
@@ -415,12 +420,17 @@ void edit(){
     file = fopen(filename, "r");
 
     if (file == NULL) {
-        printf("Error opening file.\n");
+        printf("   |[===========================================================================================================================================]|n\n");
+        printf(BOLD "\n\t\t\t\t Error opening the file .\n" RESET);
+        printf("\n   |[===========================================================================================================================================]|n");        
         return;
     }
 
     // Read file content into memory
-    while (fgets(lines[lineCount], MAX_LENGTH, file) != NULL) {
+    //while the line per row in the filename still has value, fgets will fetch all the data [MAX LENGTH = all characters in one line] and stores it in char line
+    //if the condition detects that the line has no more data the loop will then be terminated and the file will close 
+    while (fgets(lines[lineCount], MAX_LENGTH, file) != NULL) 
+    {
         lineCount++;
     }
     fclose(file);
@@ -428,7 +438,7 @@ void edit(){
     // Display file content with line numbers
     printf("\nContents of %s:\n", filename);
     for (int i = 0; i < lineCount; i++) {
-        printf("[%d] %s", i, lines[i]);
+        printf("[%d] %s", i, lines[i]); //prints all the data (char) stored in the lines array and prints the line per row in i = 1 
     }
 
     // Ask user for line to edit
@@ -439,7 +449,7 @@ void edit(){
     if (choice == 0 || choice > lineCount) {
         printf("Invalid choice or line number.\n");
         return;
-    }
+    } //handles error in choice input
 
     if (filename == "books.txt"){
         editBooks("books.txt");
@@ -460,9 +470,9 @@ void edit(){
     char lineNumber = 0;
     long position;
 
-    file = fopen(filename, "rw+");
+    file = fopen(filename, "rw+"); //open the file in read and write+ 
 
-    printf("\n\t\tEnter bookID: ");
+    printf(BOLD "\n\t\t  Enter Book ID:  " RESET);    
     scanf("%d", &B.ID);
     getchar();
 
@@ -481,15 +491,25 @@ void edit(){
     now = localtime(&t);
     strftime(B.date, sizeof(B.date), "%m-%d-%Y", now);
 
-    while (fgets(line, sizeof(line), file)) {
+    
+    while (fgets(line, sizeof(line), file)) 
+    {
         if (choice == lineNumber) {
-            position = ftell(file); // Save the current offset
+            position = ftell(file); // Save the current offset/position 
+            
             // Edit the line (replace "author me" with "new author")
             fseek(file, position - strlen(line), SEEK_SET); // <-- Moving file pointer to beginning of line
             fprintf(file, "\t%-15d%-60s%-40s%-15s\n", B.ID, B.bookName, B.authorName, B.date);
         }
         lineNumber++;
     }
+    // scans the char line and gets the size of line in the file
+    //check if the choice and linenumber in the file is the same
+        // No - continues the loop until it becomes equal
+        // Yes - position saves the current position of the pointer base on the ftell(file). ftell moves it pointer at the end of the data in line right after \n   
+            // - position - strlen(line), moves the pointer from the end to start of the line.
+            // - prints the edited data accordingly
+    
     sleep(1);
 
     printf("\n\t\t==================================================== ");
@@ -548,13 +568,19 @@ void edit(){
 
      while (fgets(line, sizeof(line), file)) {
         if (choice == lineNumber) {
-            position = ftell(file); // Save the current offset
-            // Edit the line (replace "author me" with "new author")
+            position = ftell(file); // Save the current offset / position
+            
             fseek(file, position - strlen(line), SEEK_SET); // <-- Moving file pointer to beginning of line
             fprintf(file, "\t %-20ld%-35s%-35s%-10d%-35s%-13s%-15s%-10s\n", S.ID, S.studentName , S.program, S.bookID, S.bookName, B.date ,returnDateString, S.status);
         }
         lineNumber++;
     }
+    // scans the char line and gets the size of line in the file
+    //check if the choice and linenumber in the file is the same
+        // No - continues the loop until it becomes equal
+        // Yes - position saves the current position of the pointer base on the ftell(file). ftell moves it pointer at the end of the data in line right after \n   
+            // - position - strlen(line), moves the pointer from the end to start of the line.
+            // - prints the edited data accordingly
     sleep(1);
 
     printf("\n\t\t==================================================== ");
