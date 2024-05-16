@@ -53,8 +53,6 @@ int editNum;
 
 FILE *fp, *file; //Allowing for file creation 
 
-
-
 int main() 
 {
     int choices;
@@ -137,8 +135,7 @@ int main()
 
     return 0;
 }
-
-
+  
 // VOID FUNCTIONS {
 
 void loadingAnimation() {
@@ -166,27 +163,29 @@ void loadingAnimation() {
 
 void bookID(){
 // Read the last used Book ID from a file
-    FILE *idFile = fopen("book_id.txt", "r");
-    int lastBookID = 0;
-    if (idFile != NULL) // condition where it checks if the file is successfully opened.
+    FILE *idFile = fopen("book_id.txt", "r"); //creates book_id in read mode 
+    int lastBookID = 0;                       //initializes a var lastBookID to 0 
+    if (idFile != NULL)                       // condition where it checks if the file is successfully opened.
     {
-        fscanf(idFile, "%d", &lastBookID);
+        fscanf(idFile, "%d", &lastBookID);    //reads the file and gets the 0 value form the file 
         fclose(idFile);
     }
-    B.ID = lastBookID + 1;
+    B.ID = lastBookID + 1;                    //struct Book B.ID stores the lastBookID + 1;
 
     // Update the stored Book ID
-    idFile = fopen("book_id.txt", "w");
+    idFile = fopen("book_id.txt", "w");      //creates bookID in write mode
     if (idFile != NULL) {
-        fprintf(idFile, "%d", B.ID);
+        fprintf(idFile, "%d", B.ID);         //prints B.ID in file
         fclose(idFile);
     }
+
+    // the process took so fast, that it outputs 1 in the file fast
 }
 
 void addBooks() {
-    bookID();
+    bookID();                       //checks the last Book ID
 
-    fp = fopen("books.txt", "a"); // "a" for appending to a file named books
+    fp = fopen("books.txt", "a");  // "a" - for appending / updating the data in books.txt
 
     if (fp == NULL) {
         printf("Error opening file!\n");
