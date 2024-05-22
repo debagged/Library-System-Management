@@ -18,16 +18,16 @@
 
 
 //Void Funtion Declarations {
-void loadingAnimation();
-void bookID();
-void addBooks();
-void viewBooks();
-void borrowBooks();
-void borrowedList();
-void edit();
-void editFile(const char *filename);
-void editBooks(const char *filename);
-void editBorrowed(const char *filename);
+void loadingAnimation(); //  
+void bookID();                           // Mark
+void addBooks();                         // Mark
+void viewBooks();                        // Dominic
+void borrowBooks();                      // Ivan 
+void borrowedList();                     // Dominic
+void edit();                             //Shawnlee
+void editFile(const char *filename);     // Shawnlee
+void editBooks(const char *filename);    // James 
+void editBorrowed(const char *filename); //Reinwel
 
 //typedef struct 
 struct Books {
@@ -136,7 +136,7 @@ int main()
     return 0;
 }
   
-// VOID FUNCTIONS {
+//  [================== VOID FUNCTIONS ====================]
 
 void loadingAnimation() {
     printf(" "); // Use puts for simple string output
@@ -144,7 +144,7 @@ void loadingAnimation() {
     printf("\t\tExiting the Program... ");
         for (int i = 0; i < 30; ++i) {
             printf("\b|");
-            fflush(stdout);
+            fflush(stdout); // basically overwrites the line for the output
             usleep(100000);
 
             printf("\b/");
@@ -162,33 +162,36 @@ void loadingAnimation() {
 }
 
 void bookID(){
-// Read the last used Book ID from a file
+    // Read the last used Book ID from a file
     FILE *idFile = fopen("book_id.txt", "r"); //creates book_id in read mode 
     int lastBookID = 0;                       //initializes a var lastBookID to 0 
     if (idFile != NULL)                       // condition where it checks if the file is successfully opened.
     {
-        fscanf(idFile, "%d", &lastBookID);    //reads the file and gets the 0 value form the file 
+        fscanf(idFile, "%d", &lastBookID);    //reads the file and gets the lastBookId value from the file 
         fclose(idFile);
     }
-    B.ID = lastBookID + 1;                    //struct Book B.ID stores the lastBookID + 1;
+
+    B.ID = lastBookID + 1;                    //struct Book, B.ID stores the lastBookID + 1;
 
     // Update the stored Book ID
     idFile = fopen("book_id.txt", "w");      //creates bookID in write mode
     if (idFile != NULL) {
-        fprintf(idFile, "%d", B.ID);         //prints B.ID in file
+        fprintf(idFile, "%d", B.ID);         //prints B.ID = 1 immediately in the bookId file 
         fclose(idFile);
     }
 
-    // the process took so fast, that it outputs 1 in the file fast
 }
 
 void addBooks() {
-    bookID();                       //checks the last Book ID
+    bookID();                      //checks the last Book ID
 
     fp = fopen("books.txt", "a");  // "a" - for appending / updating the data in books.txt
 
     if (fp == NULL) {
-        printf("Error opening file!\n");
+        printf("\e[1;1H\e[2J"); // clear screen
+        printf("\n   |[===========================================================================================================================================]|n\n");    
+        printf(BOLD "\t\nERROR OPENING THE FILE!\n" RESET);
+        printf("\n   |[===========================================================================================================================================]|n");        
         return;
     }
 
@@ -205,20 +208,20 @@ void addBooks() {
     printf(GREEN "\n\n\t\t===================[ ADD BOOKS ]===================\n" FORMAT);
 
 
-    printf(BOLD "\n\t\t  Enter Book Name: " RESET);
-    fgets(B.bookName, 50, stdin);
-    B.bookName[strcspn(B.bookName, "\n")] = '\0';
+    printf(BOLD "\n\t\t  Enter Book Name: " RESET); //Displays a formatted prompt asking the user to enter a book name.
+    fgets(B.bookName, 50, stdin);                   //Reads the user's input from the keyboard and stores it in the B.bookName array.
+    B.bookName[strcspn(B.bookName, "\n")] = '\0';   //Cleans up the user input by removing any trailing newline character to ensure proper handling of the book title string.
 
     printf(BOLD "\n\t\t  Enter Author Name: " RESET);
     fgets(B.authorName, 50, stdin);
     B.authorName[strcspn(B.authorName, "\n")] = '\0';
 
     // Generate current date and time
-    time_t t;
-    struct tm *now;
-    time(&t);
-    now = localtime(&t);
-    strftime(B.date, sizeof(B.date), "%m-%d-%Y", now);
+    time_t t;                        //declares a variable t of type time_t (represents time in seconds since the epoch)
+    struct tm *now;                  //declares a struct tm (in time.h, stores dates in yr, mo, day, hr, min, sec, etc) | *now holds the memory address of struct tm 
+    time(&t);                        //accesses the time function, and retrieves current calendar time and stores it in varible t 
+    now = localtime(&t);             // The localtime function takes a pointer to a time_t value (in this case, the address of t) and converts it to a broken down calendar date and time representation stored in a tm structure. 
+    strftime(B.date, sizeof(B.date), "%m-%d-%Y", now); 
 
     fprintf(fp, "\t%-15d%-60s%-40s%-15s\n", B.ID, B.bookName, B.authorName, B.date);
 
@@ -247,7 +250,7 @@ void viewBooks() {
 
     printf("\e[1;1H\e[2J"); // clear screen
 
-    // Check if the file is empty, if yes, print a message
+    // Checks if the file is empty. if yes, print a message
     fseek(fp, 0, SEEK_END);
     if (ftell(fp) == 0)
     {               
@@ -269,6 +272,7 @@ void viewBooks() {
         while (fgets(line, sizeof(line), fp) != NULL) {
             printf(BOLD "%s" RESET, line);
         }
+        
 
       printf("\n |[===========================================================================================================================================]|\n");
     }
@@ -292,16 +296,16 @@ void borrowBooks() {
     fseek(fp, 0, SEEK_END); // Move to the end of the file
     if (ftell(fp) == 0) {
         // Check the position, if it's 0, the file is empty
-        fprintf(fp, " %-20s%-35s%-35s%-10s%-35s%-13s%-15s%-10s\n", "Student ID[06-]", "Student Name", "Program", "Book ID", "Book Name", "Date Lent","Return Date", "Status");
+        fprintf(fp, " %-20s%-35s%-35s%-10s%-35s%-13s%-15s%-10s\n", "Student ID[06-]", "Student Name", "Program", "Book ID", "Book Name", "Date Lent", "Return Date", "Status");
     }
     fseek(fp, 0, SEEK_SET); // Move back to the beginning of the file
 
     // Generate current date and time
-    time_t t;
-    struct tm *now;
-    time(&t);
-    now = localtime(&t);
-    strftime(B.date, sizeof(B.date), "%m-%d-%Y", now);
+    time_t t;                        //declares a variable t of type time_t (represents time in seconds since the epoch)
+    struct tm *now;                  //declares a struct tm (in time.h, stores dates in yr, mo, day, hr, min, sec, etc) | *now holds the memory address of struct tm 
+    time(&t);                        //accesses the time function, and retrieves current calendar time and stores it in varible t 
+    now = localtime(&t);             // The localtime function takes a pointer to a time_t value (in this case, the address of t) and converts it to a broken down calendar date and time representation stored in a tm structure. 
+    strftime(B.date, sizeof(B.date), "%m-%d-%Y", now); 
 
     printf(GREEN "\n\n\t\t===========================[ BOOK LENDING ]===========================\n" FORMAT);
 
@@ -332,14 +336,16 @@ void borrowBooks() {
     printf("\n\t\t Status: %s", S.status);
 
     // Assuming the return date is one week from the borrow date
-    struct tm returnDate;
-    returnDate = *now;
-    returnDate.tm_mday += 7;
-    mktime(&returnDate);
-    char returnDateString[11];
+    struct tm returnDate;               // declares a var returnDate of a struct tm
+    returnDate = *now;                  // returnDate has the same data *now [refer to line 304] has 
+    returnDate.tm_mday += 7;            // in returnDate in tm_day increments by 7 days.
+    mktime(&returnDate);                // the function takes a pointer to struct tm; function: attempts to convert broken time componets to values
+    char returnDateString[11];          // declares a var of returnDateString that stores 11 characters, stores formatted date strings
     strftime(returnDateString, sizeof(returnDateString), "%m-%d-%Y", &returnDate);
+    //strftime function. This function formats a time value according to a specified format string
+    //strftime(destination, (calculates if the variable has enough storage(sizeof())), desired format, source  )
 
-    fprintf(fp, "\t %-20ld%-35s%-35s%-10d%-35s%-13s%-15s%-10s\n", S.ID, S.studentName , S.program, S.bookID, S.bookName, B.date ,returnDateString, S.status);
+    fprintf(fp, " %-20ld%-35s%-35s%-10d%-35s%-13s%-15s%-10s\n", S.ID, S.studentName , S.program, S.bookID, S.bookName, B.date , returnDateString, S.status);
 
     sleep(2);
 
@@ -384,21 +390,23 @@ void borrowedList(){
 
 
         // Print a separator line
-        printf("   ======================================================================================================================================================================n\n");
+        printf(" ========================================================================================================================================================================\n");
  
         // Read and print each line until the end of the file
         while (fgets(line, sizeof(line), fp) != NULL) {
             printf("%s", line);
         }
 
-        printf("\n ======================================================================================================================================================================n");
+        printf("\n ======================================================================================================================================================================\n");
     }
     fclose(fp); // Close the file
 }
 
 void edit(){
     printf("\e[1;1H\e[2J"); // clear screen
+    printf("   |[========================================================================================================]|\n");
     printf("\n\t\t Select a File to Edit \n\t\t   [1. books.txt]\n\t\t   [2.borrow.txt]\n"); //prompts to user to select a file to edit 
+    printf("\n   |[=======================================================================================================]|");        
     scanf("%d", &editNum);
     getchar();
 
@@ -419,15 +427,16 @@ void edit(){
     file = fopen(filename, "r");
 
     if (file == NULL) {
-        printf("   |[===========================================================================================================================================]|n\n");
+        printf("   |[===========================================================================================================================================]|\n");
         printf(BOLD "\n\t\t\t\t Error opening the file .\n" RESET);
-        printf("\n   |[===========================================================================================================================================]|n");        
+        printf("\n   |[===========================================================================================================================================]|");        
         return;
     }
 
     // Read file content into memory
     //while the line per row in the filename still has value, fgets will fetch all the data [MAX LENGTH = all characters in one line] and stores it in char line
     //if the condition detects that the line has no more data the loop will then be terminated and the file will close 
+    //linecount here is used for counter 
     while (fgets(lines[lineCount], MAX_LENGTH, file) != NULL) 
     {
         lineCount++;
@@ -472,6 +481,7 @@ void edit(){
     file = fopen(filename, "rw+"); //open the file in read and write+ 
 
     printf(BOLD "\n\t\t  Enter Book ID:  " RESET);    
+    //    printf(BOLD "\n\t\t  Enter Book ID: %d " RESET, B.ID);    
     scanf("%d", &B.ID);
     getchar();
 
@@ -489,6 +499,7 @@ void edit(){
     time(&t);
     now = localtime(&t);
     strftime(B.date, sizeof(B.date), "%m-%d-%Y", now);
+    //can be deleted 
 
     
     while (fgets(line, sizeof(line), file)) 
@@ -532,6 +543,7 @@ void edit(){
     time(&t);
     now = localtime(&t);
     strftime(B.date, sizeof(B.date), "%m-%d-%Y", now);
+    //can be deleted
 
     printf("\n\t\t Fatima Student ID (06-): ");
     scanf("%ld", &S.ID);
@@ -563,14 +575,14 @@ void edit(){
     mktime(&returnDate);
     char returnDateString[11];
     strftime(returnDateString, sizeof(returnDateString), "%m-%d-%Y", &returnDate);
-
+    //can be deleted
 
      while (fgets(line, sizeof(line), file)) {
         if (choice == lineNumber) {
             position = ftell(file); // Save the current offset / position
             
             fseek(file, position - strlen(line), SEEK_SET); // <-- Moving file pointer to beginning of line
-            fprintf(file, "\t %-20ld%-35s%-35s%-10d%-35s%-13s%-15s%-10s\n", S.ID, S.studentName , S.program, S.bookID, S.bookName, B.date ,returnDateString, S.status);
+            fprintf(file, " %-20ld%-35s%-35s%-10d%-35s%-13s%-15s%-10s\n", S.ID, S.studentName , S.program, S.bookID, S.bookName, B.date ,returnDateString, S.status);
         }
         lineNumber++;
     }
