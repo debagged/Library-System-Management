@@ -24,10 +24,10 @@ void addBooks();                         // Mark
 void viewBooks();                        // Dominic
 void borrowBooks();                      // Ivan 
 void borrowedList();                     // Dominic
-void edit();                             //Shawnlee
+void edit();                             // Shawnlee
 void editFile(const char *filename);     // Shawnlee
 void editBooks(const char *filename);    // James 
-void editBorrowed(const char *filename); //Reinwel
+void editBorrowed(const char *filename); // Reinwel
 
 //typedef struct 
 struct Books {
