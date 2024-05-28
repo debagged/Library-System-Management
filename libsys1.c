@@ -56,10 +56,10 @@ FILE *fp, *file; //Allowing for file creation
 int main() 
 {
     int choices;
-    start:
+    start1:
     do {
         printf("\e[1;1H\e[2J"); // clear screen
-    
+
         printf("\n\n");
         printf(BOLD "\t   |[=======================================================]|\n" RESET);
         printf(BOLD "\t   ||              "GREEN"WELCOME TO BOOKLY RECORDS"FORMAT"                ||\n" RESET);
@@ -125,10 +125,10 @@ int main()
                 printf("\nInvalid choice. Please enter a valid option.\n");
         }  
     
-        if (choices != 0) {
+  if (choices != 0) {
             printf("\n\n\tPress Enter to Continue...");
             getchar(); // Wait for the user to press Enter
-        }
+        }      
         
     }
     while(choices != 0);
@@ -194,7 +194,6 @@ void addBooks() {
         printf("\n   |[===========================================================================================================================================]|n\n");    
         printf(BOLD "\t\nERROR OPENING THE FILE!\n" RESET);
         printf("\n   |[===========================================================================================================================================]|n");        
-        return;
     }
 
     printf("\e[1;1H\e[2J"); // clear screen
@@ -341,7 +340,7 @@ void borrowBooks() {
     struct tm returnDate;               // declares a var returnDate of a struct tm
     returnDate = *now;                  // returnDate has the same data *now [refer to line 304] has 
     returnDate.tm_mday += 7;            // in returnDate in tm_day increments by 7 days.
-    mktime(&returnDate);                // the function takes a pointer to struct tm; function: attempts to convert broken time componets to values
+    mktime(&returnDate);                // the function takes a pointer to struct tm; function: attempts to convert broken time components to values
     char returnDateString[11];          // declares a var of returnDateString that stores 11 characters, stores formatted date strings
     strftime(returnDateString, sizeof(returnDateString), "%m-%d-%Y", &returnDate);
     //strftime function. This function formats a time value according to a specified format string
@@ -391,78 +390,56 @@ void borrowedList(){
         printf(GREEN "\n[ LENDING INFORMATION ]\n" FORMAT);
 
         // Print a separator line
-        printf(" ========================================================================================================================================================================\n");
+        printf("[==================================================================================================================================================================================]|\n");
  
         // Read and print each line until the end of the file
         while (fgets(line, sizeof(line), fp) != NULL) {
             printf("%s", line);
         }
 
-        printf("\n ======================================================================================================================================================================\n");
+        printf("\n[==================================================================================================================================================================================]|\n");
     }
     fclose(fp); // Close the file
 }
 
 void edit(){
-    start: 
-    printf("\e[1;1H\e[2J"); // clear screen
-    printf("\n\t   |[===================================================]|");
-    printf("\n\t   || SELECT A FILE TO EDIT                             ||"); //prompts to user to select a file to edit 
-    printf("\n\t   |[===================================================]|");
-    printf("\n\t   || 1. books.txt                                      ||"); //prompts to user to select a file to edit 
-    printf("\n\t   |[===================================================]|");
-    printf("\n\t   || 2. borrow.txt                                     ||"); //prompts to user to select a file to edit 
-    printf("\n\t   |[===================================================]|\n");      
-   
-    printf("\n\t   Enter your Choice >> ");
-    scanf("%d", &editNum);
-    getchar();
-
 
     do{
-        switch (editNum) {
-            case 0:
-                goto start;
+        printf("\e[1;1H\e[2J"); // clear screen
+        printf("\n\t   |[===================================================]|");
+        printf("\n\t   || SELECT A FILE TO EDIT                             ||"); //prompts to user to select a file to edit 
+        printf("\n\t   |[===================================================]|");
+        printf("\n\t   || 1. books.txt                                      ||"); //prompts to user to select a file to edit 
+        printf("\n\t   |[===================================================]|");
+        printf("\n\t   || 2. borrow.txt                                     ||"); //prompts to user to select a file to edit 
+        printf("\n\t   |[===================================================]|");      
+        printf("\n\t   || 0. Go back to Main Menu                           ||"); //prompts to user to select a file to edit 
+        printf("\n\t   |[===================================================]|\n");
+
+    
+        printf("\n\t   Enter your Choice >> ");
+        scanf("%d", &editNum);
+        getchar();
+
+
+        switch(editNum) 
+        {
             case 1:
                 editFile("books.txt");
-                break;
+                
     
             case 2:
                 editFile("borrow.txt");
-                break;
-    
-            default:
-                printf("\nInvalid choice. Please enter a valid option.\n");
 
         } 
-
-        if (editNum != 0) {
-            printf("\n\n\tPress Enter to Continue...");
-            getchar(); // Wait for the user to press Enter
-        }
         
-    }
-    while(editNum != 0);
+    } while(editNum != 0);
 
 
-
-    /*
-        if (editNum == 1) {
-            editFile("books.txt");
-        } 
-        else if (editNum == 2){
-            editFile("borrow.txt");
-        }
-        else{
-            goto start;
-        }
-    */
 }
-
 
 /**/void editFile(const char *filename) // editFile works through passing by ptr
 {
-    printf("\e[1;1H\e[2J"); // clear screen
 
     char lines[MAX_LINES][MAX_LENGTH];
     int lineCount = 0;
@@ -473,7 +450,7 @@ void edit(){
     if (file == NULL) {
         printf("   |[===========================================================================================================================================]|\n");
         printf(BOLD "\n\t\t\t\t Error opening the file .\n" RESET);
-        printf("\n   |[===========================================================================================================================================]|");        
+        printf("\n   |[===========================================================================================================================================]|\n");  
         return;
     }
 
@@ -570,12 +547,6 @@ void edit(){
             // - prints the edited data accordingly
     
     sleep(1);
-
-    printf("\n\t\t==================================================== ");
-    printf(GREEN "\n\n\t\t\t  INFORMATION MODIFIED SUCCESSFULLY!! \n" FORMAT);
-    printf("\n\t\t  =============================================== ");
-
-
 }
 
 /**//**/void editBorrowed(const char *filename){
@@ -644,10 +615,4 @@ void edit(){
             // - position - strlen(line), moves the pointer from the end to start of the line.
             // - prints the edited data accordingly
     sleep(1);
-
-    printf("\n\t\t==================================================== ");
-    printf(GREEN "\n\n\t\t\t  INFORMATION MODIFIED SUCCESSFULLY!! \n" FORMAT);
-    printf("\n\t\t  =============================================== ");
-
-
 }

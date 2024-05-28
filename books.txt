@@ -1,11 +1,12 @@
 	Book ID        Book Name                                                   Author Name                             Date Added     
-	1              History of Philippines                                      Ewan                                    05-28-2024     
+	1              History of Philippines                                      Unknown                                 05-28-2024     
 	2              Art of War                                                  Sun Tzu                                 05-28-2024     
-	3              History of War                                              Ewan                                    05-28-2024     
-	4              Art of War                                                  SUn                                     05-28-2024     
-	5              Jujutsu Kaisen                                              Gege                                    05-28-2024     
-	6              One Punch Man                                               ONe                                     05-28-2024     
-	7              Fire Punch                                                  ONE                                     05-28-2024     
-	8              Bleach                                                      D Tergent                               05-28-2024     
+	3              History of War                                              Unknown                                 05-28-2024     
+	4              Art of War                                                  Sun                                     05-28-2024     
+	5              Jujutsu Kaisen                                              Gege Akut                               05-28-2024     
+	6              One Punch Man                                               One                                     05-28-2024     
+	7              Two Punch Man                                               Twice                                   05-28-2024     
+	8              Bleach                                                      Tite Kubo                               05-28-2024     
 	9              Mein Kampf                                                  HitLur                                  05-28-2024     
-	10             Ligma                                                       Balls                                   05-28-2024     
+	10             Sigma                                                       Unknown                                 05-28-2024     
+	11             Humanity                                                    Darwin                                  05-28-2024     

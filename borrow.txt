@@ -1,0 +1,2 @@
+ Student ID[06-]     Student Name                       Program                            Book ID   Book Name                          Date Lent    Return Date    Status     
+ 230002108           Angelo                             BS Computer Science                8         Bleach                             05-28-2024   06-04-2024     Borrowed  
