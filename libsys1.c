@@ -56,7 +56,7 @@ FILE *fp, *file; //Allowing for file creation
 int main() 
 {
     int choices;
-
+    start:
     do {
         printf("\e[1;1H\e[2J"); // clear screen
     
@@ -418,16 +418,47 @@ void edit(){
     scanf("%d", &editNum);
     getchar();
 
-    if (editNum == 1) {
-        editFile("books.txt");
-    } 
-    else if (editNum == 2){
-        editFile("borrow.txt");
+
+    do{
+        switch (editNum) {
+            case 0:
+                goto start;
+            case 1:
+                editFile("books.txt");
+                break;
+    
+            case 2:
+                editFile("borrow.txt");
+                break;
+    
+            default:
+                printf("\nInvalid choice. Please enter a valid option.\n");
+
+        } 
+
+        if (editNum != 0) {
+            printf("\n\n\tPress Enter to Continue...");
+            getchar(); // Wait for the user to press Enter
+        }
+        
     }
-    else{
-        goto start;
-    }
+    while(editNum != 0);
+
+
+
+    /*
+        if (editNum == 1) {
+            editFile("books.txt");
+        } 
+        else if (editNum == 2){
+            editFile("borrow.txt");
+        }
+        else{
+            goto start;
+        }
+    */
 }
+
 
 /**/void editFile(const char *filename) // editFile works through passing by ptr
 {
@@ -482,7 +513,10 @@ void edit(){
     
     fclose(file);
 
-    printf("File %s updated successfully.\n", filename);
+    printf("\n\t\t==================================================== ");
+    printf(GREEN "\n\n\t\t\t FILE %s UPDATED SUCCESSFULLY!! \n" FORMAT, filename);
+    printf("\n\t\t  =============================================== ");
+
 }
 
 /**//**/void editBooks(const char *filename)
@@ -524,7 +558,7 @@ void edit(){
             
             // Edit the line (replace "author me" with "new author")
             fseek(file, position - strlen(line), SEEK_SET); // <-- Moving file pointer to beginning of line
-            fprintf(file, "\t%-15d%-60s%-40s%-15s\n", B.ID, B.bookName, B.authorName, B.date);
+            fprintf(file,"\t%-15d%-60s%-40s%-15s\n", B.ID, B.bookName, B.authorName, B.date);
         }
         lineNumber++;
     }

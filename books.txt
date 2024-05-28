@@ -1,6 +1,6 @@
 	Book ID        Book Name                                                   Author Name                             Date Added     
-	1              History of PH                                               Ewan                                    05-28-2024     
-	2              Art of War                                                  Sun Tzuyu                               05-28-2024     
+	1              History of Philippines                                      Ewan                                    05-28-2024     
+	2              Art of War                                                  Sun Tzu                                 05-28-2024     
 	3              History of War                                              Ewan                                    05-28-2024     
 	4              Art of War                                                  SUn                                     05-28-2024     
 	5              Jujutsu Kaisen                                              Gege                                    05-28-2024     
