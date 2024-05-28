@@ -18,7 +18,7 @@
 
 
 //Void Funtion Declarations {
-void loadingAnimation(); //  
+void loadingAnimation(); 
 void bookID();                           // Mark
 void addBooks();                         // Mark
 void viewBooks();                        // Dominic
@@ -163,8 +163,10 @@ void loadingAnimation() {
 
 void bookID(){
     // Read the last used Book ID from a file
-    FILE *idFile = fopen("book_id.txt", "r"); //creates book_id in read mode 
     int lastBookID = 0;                       //initializes a var lastBookID to 0 
+    FILE *idFile;
+
+    idFile = fopen("book_id.txt", "r");       //creates book_id in read mode 
     if (idFile != NULL)                       // condition where it checks if the file is successfully opened.
     {
         fscanf(idFile, "%d", &lastBookID);    //reads the file and gets the lastBookId value from the file 
@@ -377,7 +379,7 @@ void borrowedList(){
     fseek(fp, 0, SEEK_END);
     if (ftell(fp) == 0)
     {
-         printf("   |[===========================================================================================================================================]|n\n");
+        printf("   |[===========================================================================================================================================]|n\n");
         printf(BOLD "\n\t\t\t\t No data available.\n" RESET);
         printf("\n   |[===========================================================================================================================================]|n");
     } 
@@ -386,8 +388,7 @@ void borrowedList(){
         // Move the file pointer to the beginning of the file
         fseek(fp, 0, SEEK_SET);
 
-        printf(GREEN "\n[LENDING INFORMATION]\n" FORMAT);
-
+        printf(GREEN "\n[ LENDING INFORMATION ]\n" FORMAT);
 
         // Print a separator line
         printf(" ========================================================================================================================================================================\n");
@@ -403,23 +404,35 @@ void borrowedList(){
 }
 
 void edit(){
+    start: 
     printf("\e[1;1H\e[2J"); // clear screen
-    printf("   |[========================================================================================================]|\n");
-    printf("\n\t\t Select a File to Edit \n\t\t   [1. books.txt]\n\t\t   [2.borrow.txt]\n"); //prompts to user to select a file to edit 
-    printf("\n   |[=======================================================================================================]|");        
+    printf("\n\t   |[===================================================]|");
+    printf("\n\t   || SELECT A FILE TO EDIT                             ||"); //prompts to user to select a file to edit 
+    printf("\n\t   |[===================================================]|");
+    printf("\n\t   || 1. books.txt                                      ||"); //prompts to user to select a file to edit 
+    printf("\n\t   |[===================================================]|");
+    printf("\n\t   || 2. borrow.txt                                     ||"); //prompts to user to select a file to edit 
+    printf("\n\t   |[===================================================]|\n");      
+   
+    printf("\n\t   Enter your Choice >> ");
     scanf("%d", &editNum);
     getchar();
 
     if (editNum == 1) {
         editFile("books.txt");
     } 
-    else{
+    else if (editNum == 2){
         editFile("borrow.txt");
+    }
+    else{
+        goto start;
     }
 }
 
 /**/void editFile(const char *filename) // editFile works through passing by ptr
 {
+    printf("\e[1;1H\e[2J"); // clear screen
+
     char lines[MAX_LINES][MAX_LENGTH];
     int lineCount = 0;
 
@@ -474,6 +487,8 @@ void edit(){
 
 /**//**/void editBooks(const char *filename)
 {
+    printf("\e[1;1H\e[2J"); // clear screen
+
     char line[MAX_LINES];
     char lineNumber = 0;
     long position;
@@ -530,6 +545,8 @@ void edit(){
 }
 
 /**//**/void editBorrowed(const char *filename){
+   
+    printf("\e[1;1H\e[2J"); // clear screen
 
     char line[MAX_LINES];
     char lineNumber = 0;
