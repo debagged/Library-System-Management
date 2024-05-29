@@ -16,24 +16,24 @@ int main(){
     
     char tab[] = {"\t\t\t"};
     printf("\e[1;1H\e[2J"); // clear screen
-
-    printf("%sEnter Username: ", tab);
-    scanf("%s", userName);
-
+    printf("%s|[===============================================]|\n",tab);
+    printf("%s  Enter Username: ", tab);
+    scanf("%s ", userName);
     printf("%sEnter Password: ", tab);
     scanf("%s", password);
 
 
     if (strcmp(userName, "admin") == 0 && strcmp(password, "pass1234") == 0 )
     {
-        printf("\aLogin Successfully");
+
+        printf("%sLogin Successfully", tab);
             fflush(stdout); // Flush the output buffer to ensure the message is displayed immediately
         sleep(1);
         system(SYS_COMMAND); // Use the defined command for system call
     }
     else
     {
-        printf("Invalid Info\n");
+        printf("%sInvalid Info\n", tab);
     }
 
     return 0;

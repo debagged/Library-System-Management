@@ -273,8 +273,7 @@ void viewBooks() {
         while (fgets(line, sizeof(line), fp) != NULL) {
             printf(BOLD "%s" RESET, line);
         }
-        
-
+    
       printf("\n |[===========================================================================================================================================]|\n");
     }
     fclose(fp); // Close the file
