@@ -425,10 +425,12 @@ void edit(){
         {
             case 1:
                 editFile("books.txt");
+                break;
                 
     
             case 2:
                 editFile("borrow.txt");
+                break;
 
         } 
         
@@ -439,6 +441,7 @@ void edit(){
 
 /**/void editFile(const char *filename) // editFile works through passing by ptr
 {
+    printf("\e[1;1H\e[2J"); // clear screen
 
     char lines[MAX_LINES][MAX_LENGTH];
     int lineCount = 0;
@@ -465,9 +468,12 @@ void edit(){
 
     // Display file content with line numbers
     printf("\nContents of %s:\n", filename);
+    printf("|[========================================================================================================================================================================================]|\n");
     for (int i = 0; i < lineCount; i++) {
-        printf("[%d] %s", i, lines[i]); //prints all the data (char) stored in the lines array and prints the line per row in i = 1 
+        printf("  [%d] %s", i, lines[i]); //prints all the data (char) stored in the lines array and prints the line per row in i = 1 
     }
+    printf("|[========================================================================================================================================================================================]|\n");
+
 
     // Ask user for line to edit
     printf("\nEnter the line number to edit (0 to cancel): ");
@@ -503,9 +509,13 @@ void edit(){
     char lineNumber = 0;
     long position;
 
+    viewBooks();
+
     file = fopen(filename, "rw+"); //open the file in read and write+ 
 
-    printf(BOLD "\n\t\t  Enter Book ID:  " RESET);    
+    printf(BOLD "\n\t\t  ENTER DATA FOR EDTING  " RESET);    
+
+    printf(BOLD "\n\n\t\t  Enter Book ID:  " RESET);    
     //    printf(BOLD "\n\t\t  Enter Book ID: %d " RESET, B.ID);    
     scanf("%d", &B.ID);
     getchar();
@@ -558,6 +568,8 @@ void edit(){
     
     file = fopen(filename, "rw+");
 
+    borrowedList();
+
     // Generate current date and time
     time_t t;
     struct tm *now;
@@ -566,7 +578,9 @@ void edit(){
     strftime(B.date, sizeof(B.date), "%m-%d-%Y", now);
     //can be deleted
 
-    printf("\n\t\t Fatima Student ID (06-): ");
+    printf(BOLD "\n\t\t  ENTER DATA FOR EDTING  " RESET);    
+
+    printf("\n\n\t\t Fatima Student ID (06-): ");
     scanf("%ld", &S.ID);
     getchar();
 
@@ -586,7 +600,7 @@ void edit(){
     fgets(S.bookName, 50, stdin);
     S.bookName[strcspn(S.bookName, "\n")] = '\0';
 
-    printf("\n\n\n\t Status: ");
+    printf("\n\t\t Status: ");
     scanf("%s", S.status);
 
     // Assuming the return date is one week from the borrow date

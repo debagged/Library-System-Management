@@ -1,16 +1,7 @@
 	Book ID        Book Name                                                   Author Name                             Date Added     
-	1              History of Philippines                                      Unknown                                 05-28-2024     
-	2              Art of War                                                  Sun Tzu                                 05-28-2024     
-	3              History of War                                              Unknown                                 05-28-2024     
-	4              Art of War                                                  Sun                                     05-28-2024     
-	5              Jujutsu Kaisen                                              Gege Akut                               05-28-2024     
-	6              One Punch Man                                               One                                     05-28-2024     
-	7              Two Punch Man                                               Twice                                   05-28-2024     
-	8              Bleach                                                      Tite Kubo                               05-28-2024     
-	9              Mein Kampf                                                  HitLur                                  05-28-2024     
-	10             Sigma                                                       Unknown                                 05-28-2024     
-	11             Humanity                                                    Darwin                                  05-28-2024     
-	12                                                                                                                 05-29-2024     
-	13                                                                                                                 05-29-2024     
-
-
+	1              History of the Philippines                                  Magellan                                05-29-2024     
+	2              The C Book 1st Edition                                      Dennis Ritchie                          05-29-2024     
+	3              Java for Dummies                                            Unknown                                 05-29-2024     
+	4              Python for Babies                                           Snape                                   05-29-2024     
+	5              Kobe Bryant                                                 Kebron James                            05-29-2024     
+	6              C++ Book                                                    Sir EIic                                05-29-2024     

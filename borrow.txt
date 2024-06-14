@@ -1,2 +1,6 @@
- Student ID[06-]     Student Name                       Program                            Book ID   Book Name                          Date Lent    Return Date    Status     
- 230002108           Angelo                             BS Computer Science                8         Bleach                             05-28-2024   06-04-2024     Borrowed  
+ Student ID[06-]     Student Name                       Program                            Book ID   Book Name                          Date Lent    Return Date    Status    
+ 230002108           Angelo Goloyugo                    BS Computer Science                2         The C Book 1st Edition             05-29-2024   06-05-2024     Borrowed  
+ 210002250           Ivan Miguel Regencia               BS Computer Science                5         Kobe Bryant                        05-29-2024   06-05-2024     Borrowed  
+ 300003171           James Carey Ambas                  BS Computer Science                5         Kobe Bryant                        05-29-2024   06-05-2024     Borrowed  
+ 230002108           Angelo Goloyugo                    BS Computer Science                2         The C Book 1st Edition             05-29-2024   06-05-2024     Returned  
+ 221000225           Ivan Regencia                      BS Computer Science                6         C++ Book                           05-29-2024   06-05-2024     Borrowed  
