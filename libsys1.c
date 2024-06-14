@@ -125,13 +125,13 @@ int main()
                 printf("\nInvalid choice. Please enter a valid option.\n");
         }  
     
-  if (choices != 0) {
+        if (choices != 0) 
+        {
             printf("\n\n\tPress Enter to Continue...");
             getchar(); // Wait for the user to press Enter
         }      
-        
-    }
-    while(choices != 0);
+                
+    }while(choices != 0);
 
     return 0;
 }
@@ -545,6 +545,7 @@ void edit(){
             // Edit the line (replace "author me" with "new author")
             fseek(file, position - strlen(line), SEEK_SET); // <-- Moving file pointer to beginning of line
             fprintf(file,"\t%-15d%-60s%-40s%-15s\n", B.ID, B.bookName, B.authorName, B.date);
+            break;
         }
         lineNumber++;
     }
@@ -618,6 +619,7 @@ void edit(){
             
             fseek(file, position - strlen(line), SEEK_SET); // <-- Moving file pointer to beginning of line
             fprintf(file, " %-20ld%-35s%-35s%-10d%-35s%-13s%-15s%-10s\n", S.ID, S.studentName , S.program, S.bookID, S.bookName, B.date ,returnDateString, S.status);
+            break;
         }
         lineNumber++;
     }

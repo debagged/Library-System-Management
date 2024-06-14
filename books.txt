@@ -3,5 +3,5 @@
 	2              The C Book 1st Edition                                      Dennis Ritchie                          05-29-2024     
 	3              Java for Dummies                                            Unknown                                 05-29-2024     
 	4              Python for Babies                                           Snape                                   05-29-2024     
-	5              Kobe Bryant                                                 Kebron James                            05-29-2024     
+	5              Kobe Braynt Biography                                       Kobe Bryant                             06-14-2024     
 	6              C++ Book                                                    Sir EIic                                05-29-2024     
